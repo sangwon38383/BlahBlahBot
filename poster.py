@@ -6,9 +6,11 @@ from konlpy.tag import Kkma
 #대충 만들어 놓을테니 크롤링 된 결과 보고 조금만 바꿔서 씁시다.
 #단어list 가 들어오면 임베딩을 시킵니다.
 
-parser.add_argument("--crawled_file_1p")
-parser.add_argument("--crawled_file_2p")
-parser.add_argument("--save_path")
+def parser_add_argument(parser):
+    parser.add_argument("--crawled_file_1p")
+    parser.add_argument("--crawled_file_2p")
+    parser.add_argument("--save_path")
+    return parser
 
 #json 파일에 {"id": "사람 이름", "text": "크롤링 결과들"} 이렇게 들어옮을 전제로 만들었습니다. 
 #json 파일을 읽습니다.
@@ -47,7 +49,7 @@ def embedder(words):
 #일단 2인 모드로 만들어 두겠습니다. 
 
 def matcher(as, bs):
-    pair_dist_list = []
+    dist_list = []
     for a in as:
         for b in bs:
             similarity = model.similarity(w1=a, w2=b)
