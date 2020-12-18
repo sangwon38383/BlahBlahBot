@@ -38,10 +38,13 @@ model = gensim.models.Word2Vec.load('./ko.bin')
 def embedder(words):
     
     embs = []
-    for i in words:    
-        emb = model.wv[i]
-        embs.append(emb)
-
+    for i in words:
+        try:
+            emb = model.wv[i]
+            embs.append(emb)
+        except:
+            pass
+      
     return embs
 
 #임베딩을 시켰으니 코사인 거리를 재고, 공통 관심사를 뽑습니다. 
