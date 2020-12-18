@@ -90,7 +90,7 @@ def main():
     themes_dists = matcher(1p_embs, 2p_embs)
     
     out_file = {"themes":[]}
-    for t, d in theme_dists:
+    for t, d in themes_dists:
         out_file["themes"].append({"title":"오늘은 %s에 대해 얘기해볼까요?"%t, "similarity":d})
         out_file["themes"].append({"title":"%s에 대해 관심이 많으신가요?"%t, "similarity":d})
         out_file["themes"].append({"title":"안녕하세요, 혹시 두분 다 %s에 관심이 많으실 것 같은데, 이거와 관련해 얘기해볼까요?"%t, "similarity":d}) 
