@@ -35,18 +35,6 @@ def wordsampler(sent):
 
 model = gensim.models.Word2Vec.load('./ko.bin')
 
-def embedder(words):
-    
-    embs = []
-    for i in words:
-        try:
-            emb = model.wv[i]
-            embs.append(emb)
-        except:
-            pass
-      
-    return embs
-
 #임베딩을 시켰으니 코사인 거리를 재고, 공통 관심사를 뽑습니다. 
 #일단 2인 모드로 만들어 두겠습니다. 
 
@@ -54,15 +42,18 @@ def matcher(as, bs):
     dist_list = []
     for a in as:
         for b in bs:
-            similarity = model.similarity(w1=a, w2=b)
-            pair = [a, b, similarity]
-            dist_list.append(pair)
+            try:
+                similarity = model.similarity(w1=a, w2=b)
+                pair = [a, b, similarity]
+                dist_list.append(pair)
+            except:
+                pass
 
     dist_list.sort(key=2, reverse=True)
     dist_close_pair = dist_list[:9]
     themes_and_dists = []
     for d in dist_close_pair:
-        themes_and_dists.append(d[0],d[2])
+        themes_and_dists.append([d[0],d[2]])
         
     return themes_and_dists
 
@@ -76,20 +67,20 @@ def main():
     sents_1 = jsonreader(args.crawled_file_1p)
     sents_2 = jsonreader(args.crawled_file_2p)
 
-    1p_embs = []
-    2p_embs = []
-
-    for sent in sents_1:
-        sent = wordsampler(sent)
-        embs = embedder(sent)
-        1p_embs.append(embs)
-
-    for sent in sents_2:
-        sent = wordsampler(sent)
-        embs = embedder(sent)
-        2p_embs.append(embs)
-
-    themes_dists = matcher(1p_embs, 2p_embs)
+    nouns_1 = []
+    nouns_2 = []
+    
+    for i in sents_1:
+        w = wordsampler(i)
+        for i in w:
+            nouns_1.append(i)
+            
+    for i in sents_2:
+        w = wordsampler(i)
+        for i in w:
+            nouns_2.append(i)
+    
+    themes_dists = matcher(nouns_1, nouns_2)
     
     out_file = {"themes":[]}
     for t, d in themes_dists:
