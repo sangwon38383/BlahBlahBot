@@ -1,7 +1,7 @@
 import gensim  
 import argparse
 import json 
-from konlpy.tag import Kkma 
+from konlpy.tag import Okt 
 
 #대충 만들어 놓을테니 크롤링 된 결과 보고 조금만 바꿔서 씁시다.
 #단어list 가 들어오면 임베딩을 시킵니다.
@@ -25,10 +25,10 @@ def jsonreader(j):
 
 #문장에서 명사를 추출합니다.
 
-kkma = Kkma()
+okt = Okt()
 
 def wordsampler(sent):
-    sent = kkma.nouns(sent)
+    sent = okt.nouns(sent)
     return sent 
 
 #임베딩을 합니다.
@@ -53,7 +53,10 @@ def matcher(as, bs):
     dist_close_pair = dist_list[:9]
     themes_and_dists = []
     for d in dist_close_pair:
-        dic = [d[0],d[2]]
+        dec = model.wv.most_similar([d[0],d[1]])[0]
+        dac = dec[0]
+        dic = dec[1]
+        dic = [dac,dec]
         themes_and_dists.append(dic)
         
     return themes_and_dists
