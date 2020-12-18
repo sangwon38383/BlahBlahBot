@@ -17,10 +17,9 @@ def parser_add_argument(parser):
 
 def jsonreader(json):
     output = []
-    with open(json) as f:
-        for line in f:
-            text = json.loads(line)
-            text = text["text"]
+        text = json.loads(json)
+        text = text["sentences"]
+        for i in text:
             output.append(text)
     return output
 
@@ -67,7 +66,7 @@ def matcher(as, bs):
 #matcher는 주제들의 리스트(10가지)을 출력합니다. 
  
 def main():
-    parser = argparse.Argumentparser()
+    parser = argparse.ArgumentParser()
     parser = parser_add_argument(parser)
     args = parser.parse_args()
 
