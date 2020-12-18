@@ -53,7 +53,8 @@ def matcher(as, bs):
     dist_close_pair = dist_list[:9]
     themes_and_dists = []
     for d in dist_close_pair:
-        themes_and_dists.append([d[0],d[2]])
+        dic = [d[0],d[2]]
+        themes_and_dists.append(dic)
         
     return themes_and_dists
 
