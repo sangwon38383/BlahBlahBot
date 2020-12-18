@@ -39,7 +39,7 @@ def embedder(words):
     
     embs = []
     for i in words:    
-        emb = model.wv['word']
+        emb = model.wv[i]
         embs.append(emb)
 
     return embs
