@@ -15,12 +15,12 @@ def parser_add_argument(parser):
 #json 파일에 {"id": "사람 이름", "text": "크롤링 결과들"} 이렇게 들어옮을 전제로 만들었습니다. 
 #json 파일을 읽습니다.
 
-def jsonreader(json):
+def jsonreader(j):
     output = []
-        text = json.loads(json)
-        text = text["sentences"]
-        for i in text:
-            output.append(text)
+    text = j
+    text = text["sentences"]
+    for i in text:
+        output.append(text)
     return output
 
 #문장에서 명사를 추출합니다.
@@ -91,7 +91,7 @@ def main():
 #json으로 저장합니다.
    
     with open(args.save_path, 'w') as outfile:
-    json.dummp(out_file, outfile)
+        json.dummp(out_file, outfile)
 
  
 if __name__ == "__main__":
